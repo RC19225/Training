@@ -43,11 +43,11 @@ publish/
 *.g.i.cs
 *.designer.cs
 
-# Ignore coverage reports
-coverage/
-*.coverage
-*.coveragexml
-TestResults/
+# # Ignore coverage reports
+# coverage/
+# *.coverage
+# *.coveragexml
+# TestResults/
 
 # Ignore other common files
 *.bak
