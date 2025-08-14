@@ -1,0 +1,56 @@
+# Ignore build outputs
+bin/
+obj/
+*.exe
+*.dll
+*.pdb
+*.log
+
+# Ignore user-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Ignore IDE-specific files
+.vscode/
+.idea/
+*.vs/
+
+# Ignore temporary files
+*.tmp
+*.temp
+*.cache
+*.log
+*.pid
+*.gz
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Ignore dependency directories
+packages/
+node_modules/
+
+# Ignore publish outputs
+publish/
+*.publishsettings
+
+# Ignore generated files
+*.g.cs
+*.g.i.cs
+*.designer.cs
+
+# Ignore coverage reports
+coverage/
+*.coverage
+*.coveragexml
+TestResults/
+
+# Ignore other common files
+*.bak
+*.swp
+*.orig
+*.rej
