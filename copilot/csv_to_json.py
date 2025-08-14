@@ -166,7 +166,7 @@ class CSVToJSONConverter:
     def convert(self, input_path: str, output_path: Optional[str] = None, 
                 delimiter: str = ',', orientation: str = 'records', 
                 pretty: bool = False, auto_convert: bool = True,
-                encoding: str = 'utf-8') -> str:
+                encoding: str = 'utf-8', auto_save: bool = True) -> str:
         """
         Main conversion method.
         
@@ -178,6 +178,7 @@ class CSVToJSONConverter:
             pretty: Whether to format JSON
             auto_convert: Whether to auto-convert data types
             encoding: File encoding
+            auto_save: Whether to automatically save to file
             
         Returns:
             JSON string or output file path
@@ -191,6 +192,11 @@ class CSVToJSONConverter:
         
         # Format according to orientation
         formatted_data = self.format_output(data, orientation)
+        
+        # Generate output path if not provided and auto_save is True
+        if auto_save and not output_path:
+            input_file = Path(input_path)
+            output_path = str(input_file.with_suffix('.json'))
         
         # Output to file or return as string
         if output_path:
@@ -210,16 +216,19 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  %(prog)s data.csv                          # Print JSON to stdout
-  %(prog)s data.csv -o output.json           # Save to file
-  %(prog)s data.csv --pretty                 # Pretty-printed JSON
+  %(prog)s data.csv                          # Save to data.json
+  %(prog)s data.csv -o output.json           # Save to specific file
+  %(prog)s data.csv --stdout                 # Print JSON to stdout
+  %(prog)s data.csv --pretty                 # Save with pretty formatting
   %(prog)s data.csv --orient dict            # Dictionary orientation
   %(prog)s data.csv -d ";" --encoding latin1 # Custom delimiter and encoding
         """
     )
     
     parser.add_argument('input', help='Input CSV file path')
-    parser.add_argument('-o', '--output', help='Output JSON file path')
+    parser.add_argument('-o', '--output', help='Output JSON file path (default: input filename with .json extension)')
+    parser.add_argument('--stdout', action='store_true',
+                       help='Print JSON to stdout instead of saving to file')
     parser.add_argument('-d', '--delimiter', default=',', 
                        help='CSV delimiter character (default: ",")')
     parser.add_argument('--orient', choices=['records', 'list', 'dict', 'values'],
@@ -254,16 +263,17 @@ Examples:
             orientation=args.orient,
             pretty=args.pretty,
             auto_convert=not args.no_convert,
-            encoding=args.encoding
+            encoding=args.encoding,
+            auto_save=not args.stdout
         )
         
-        if args.output:
-            print(f"Successfully converted '{args.input}' to '{args.output}'")
+        if args.stdout:
+            print(result)
+        else:
+            print(f"Successfully converted '{args.input}' to '{result}'")
             print(f"Output format: {args.orient}")
             if args.pretty:
                 print("Formatting: Pretty-printed")
-        else:
-            print(result)
             
     except Exception as e:
         print(f"Error: {e}", file=sys.stderr)
