@@ -1,1 +1,22 @@
 test.py
+/copilot
+/prompt_enginering/
+
+# Development files
+*.log
+*.tmp
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Node modules (if you add npm later)
+node_modules/
+
+# Build directories
+dist/
+build/
