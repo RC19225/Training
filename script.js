@@ -1,6 +1,11 @@
 // DOM elements
 const greetBtn = document.getElementById('greet-btn');
 const contactInfo = document.getElementById('contact-info');
+const themeToggle = document.getElementById('theme-toggle');
+const tipBtn = document.getElementById('tip-btn');
+const gitTip = document.getElementById('git-tip');
+const footerClock = document.getElementById('footer-clock');
+const scrollProgress = document.getElementById('scroll-progress');
 
 // Array of fun messages
 const messages = [
@@ -12,6 +17,20 @@ const messages = [
     "Version control mastery incoming! 🎯"
 ];
 
+// Array of random Git tips
+const gitTips = [
+    "Use 'git status' often to see your current changes.",
+    "Branch often! Use 'git branch' and 'git checkout -b'.",
+    "Use 'git log --oneline' for a compact commit history.",
+    "Resolve merge conflicts by editing files and committing.",
+    "Use 'git stash' to save work-in-progress changes.",
+    "Tag releases with 'git tag v1.0.0'.",
+    "Use 'git diff' to see changes before committing.",
+    "Undo last commit with 'git reset --soft HEAD~1'.",
+    "Use 'git show' to see details of a specific commit.",
+    "Push branches to remote with 'git push origin branch-name'."
+];
+
 // Counter for message rotation
 let messageIndex = 0;
 
@@ -19,6 +38,39 @@ let messageIndex = 0;
 function getRandomColor() {
     const colors = ['#667eea', '#764ba2', '#ffd700', '#ff6b6b', '#4ecdc4', '#45b7d1'];
     return colors[Math.floor(Math.random() * colors.length)];
+}
+
+// Theme switcher
+function toggleTheme() {
+    const dark = document.body.classList.toggle('dark-theme');
+    themeToggle.textContent = dark ? '☀️ Light' : '🌙 Theme';
+}
+
+// Add dark theme CSS
+function injectDarkThemeCSS() {
+    const style = document.createElement('style');
+    style.textContent = `
+        body.dark-theme {
+            background: #222 !important;
+            color: #eee !important;
+        }
+        body.dark-theme header, body.dark-theme .section, body.dark-theme .command-card, body.dark-theme #contact-info, body.dark-theme .feedback-form {
+            background: #333 !important;
+            color: #ffd700 !important;
+        }
+        body.dark-theme .cta-button {
+            background: #764ba2 !important;
+            color: #ffd700 !important;
+        }
+        body.dark-theme .nav-links a {
+            color: #ffd700 !important;
+        }
+        body.dark-theme .nav-links a.active {
+            color: #ffd700 !important;
+            border-bottom: 2px solid #ffd700;
+        }
+    `;
+    document.head.appendChild(style);
 }
 
 // Function to create animated notification
@@ -65,6 +117,22 @@ function showNotification(message) {
     }, 3000);
 }
 
+// Git tip generator
+function showRandomGitTip() {
+    const tip = gitTips[Math.floor(Math.random() * gitTips.length)];
+    gitTip.textContent = tip;
+    gitTip.style.background = getRandomColor();
+    gitTip.style.padding = '10px';
+    gitTip.style.borderRadius = '8px';
+    gitTip.style.color = '#fff';
+    setTimeout(() => {
+        gitTip.textContent = '';
+        gitTip.style.background = 'none';
+        gitTip.style.padding = '0';
+        gitTip.style.color = '#764ba2';
+    }, 4000);
+}
+
 // Function to animate button
 function animateButton() {
     greetBtn.style.transform = 'scale(0.95)';
@@ -92,6 +160,33 @@ function updateContactInfo() {
     }, 5000);
 }
 
+// Feedback form validation and submission
+function handleFeedbackForm() {
+    const form = document.getElementById('feedbackForm');
+    if (!form) return;
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const name = document.getElementById('feedbackName').value.trim();
+        const email = document.getElementById('feedbackEmail').value.trim();
+        const msg = document.getElementById('feedbackMsg').value.trim();
+        const status = document.getElementById('feedbackStatus');
+        if (!name || !email || !msg) {
+            status.textContent = 'Please fill out all fields.';
+            status.style.color = '#ff6b6b';
+            return;
+        }
+        if (!email.match(/^[^@\s]+@[^@\s]+\.[^@\s]+$/)) {
+            status.textContent = 'Please enter a valid email address.';
+            status.style.color = '#ff6b6b';
+            return;
+        }
+        status.textContent = 'Thank you for your feedback, ' + name + '!';
+        status.style.color = '#28a745';
+        form.reset();
+        setTimeout(() => { status.textContent = ''; }, 4000);
+    });
+}
+
 // Function to highlight current section in navigation
 function highlightNavigation() {
     const sections = document.querySelectorAll('section');
@@ -115,6 +210,26 @@ function highlightNavigation() {
             }
         });
     });
+}
+
+// Live clock in footer
+function startFooterClock() {
+    if (!footerClock) return;
+    function updateClock() {
+        const now = new Date();
+        footerClock.textContent = 'Current time: ' + now.toLocaleTimeString();
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
+}
+
+// Scroll progress bar
+function updateScrollProgress() {
+    if (!scrollProgress) return;
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const percent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    scrollProgress.style.width = percent + '%';
 }
 
 // Function to add smooth scrolling
@@ -208,6 +323,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     `;
     document.head.appendChild(style);
+    // Theme toggle
+    injectDarkThemeCSS();
+    if (themeToggle) themeToggle.addEventListener('click', toggleTheme);
+    // Git tip button
+    if (tipBtn) tipBtn.addEventListener('click', showRandomGitTip);
+    // Feedback form
+    handleFeedbackForm();
+    // Footer clock
+    startFooterClock();
+    // Scroll progress
+    window.addEventListener('scroll', updateScrollProgress);
+    updateScrollProgress();
 });
 
 // Console easter egg

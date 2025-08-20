@@ -18,6 +18,7 @@
                 <li><a href="#projects">Projects</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
+            <button id="theme-toggle" class="cta-button" style="margin-left:2rem;">🌙 Theme</button>
         </nav>
     </header>
 
@@ -67,6 +68,10 @@
                         <code>git show</code>
                     </div>
                 </div>
+                <div class="git-tip-box" style="margin-top:2rem;text-align:center;">
+                    <button id="tip-btn" class="cta-button">Show Random Git Tip</button>
+                    <div id="git-tip" style="margin-top:1rem;font-size:1.1rem;color:#764ba2;"></div>
+                </div>
             </div>
         </section>
 
@@ -78,16 +83,28 @@
                     <p>Email: practice@git.com</p>
                     <p>Phone: (555) 123-4567</p>
                 </div>
+                <div class="feedback-form" style="margin-top:2rem;max-width:400px;margin-left:auto;margin-right:auto;">
+                    <h3>Send Feedback</h3>
+                    <form id="feedbackForm">
+                        <input type="text" id="feedbackName" placeholder="Your Name" required style="width:100%;margin-bottom:0.5rem;padding:0.5rem;">
+                        <input type="email" id="feedbackEmail" placeholder="Your Email" required style="width:100%;margin-bottom:0.5rem;padding:0.5rem;">
+                        <textarea id="feedbackMsg" placeholder="Your Feedback" required style="width:100%;margin-bottom:0.5rem;padding:0.5rem;"></textarea>
+                        <button type="submit" class="cta-button" style="width:100%;">Submit</button>
+                        <div id="feedbackStatus" style="margin-top:0.5rem;color:#667eea;"></div>
+                    </form>
+                </div>
             </div>
         </section>
     </main>
 
     <footer>
         <div class="container">
+            <div id="footer-clock" style="font-size:1.1rem;margin-bottom:0.5rem;"></div>
             <p>&copy; 2025 Git Practice Project. All rights reserved.</p>
         </div>
     </footer>
 
+    <div id="scroll-progress" style="position:fixed;top:0;left:0;width:0;height:5px;background:#ffd700;z-index:2000;transition:width 0.2s;"></div>
     <script src="script.js"></script>
 </body>
 </html>
