@@ -1,0 +1,8 @@
+{
+    "default": {
+        "import": ["steps/**/*.ts"],
+        "paths": ["feautres/**/*.feature"],
+        "requireModule": ["ts-node/register"],
+        "loader": ["ts-node/esm"]
+    }
+}

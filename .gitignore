@@ -1,3 +1,10 @@
 test.py
 prompt_enginering/
 copilot/
+
+# Playwright
+node_modules/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/

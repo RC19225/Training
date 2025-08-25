@@ -1,0 +1,19 @@
+import { Before , After } from '@cucumber/cucumber';
+import {chromium , Page, Browser} from '@playwright/test';
+let page: Page;
+let browser: Browser;
+
+
+Before(async () => {
+    browser = await chromium.launch();
+    page = await browser.newPage();
+
+});
+
+After(async () => {
+    await browser.close();
+});
+
+export{page, browser}
+
+

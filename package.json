@@ -1,0 +1,37 @@
+{
+  "name": "training",
+  "version": "1.0.0",
+  "description": "This repository documents the training I underwent, organized into different branches for each topic. Each branch contains materials, examples, and resources specific to that area of training.",
+  "main": "index.js",
+  "scripts": {
+    "test": "cucumber-js",
+    "test:n": "npx playwright test",
+    "test:headed": "npx playwright test --headed",
+    "test:debug": "npx playwright test --debug",
+    "codegen": "npx playwright codegen",
+    "show-report": "npx playwright show-report",
+    "list-browsers": "npx playwright install --list",
+    "install-browsers": "npx playwright install",
+    "test:chromium": "npx playwright test --project=chromium",
+    "test:local": "BASE_URL=http://localhost:4200 npx playwright test",
+    "test:ui": "npx playwright test --ui"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RC19225/Training.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/RC19225/Training/issues"
+  },
+  "homepage": "https://github.com/RC19225/Training#readme",
+  "devDependencies": {
+    "@cucumber/cucumber": "^12.2.0",
+    "@playwright/test": "^1.55.0",
+    "@types/node": "^24.3.0",
+    "ts-node": "^10.9.2"
+  }
+}
