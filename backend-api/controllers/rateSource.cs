@@ -89,18 +89,18 @@ namespace BackendApi.Controllers
         }
 
         // PUT: api/ratesource/{id}
-        [HttpPut("{Geocode}")]
-        public async Task<IActionResult> UpdateRateSource(string Geocode, [FromBody] Rate rateSource)
+        [HttpPut("{geocode}")]
+        public async Task<IActionResult> UpdateRateSource(string geocode, [FromBody] Rate rateSource)
         {
             try
             {
         
                 var existingRate = await _dbContext.Rates
-                    .FirstOrDefaultAsync(r => r.GEOCODE == Geocode);
+                    .FirstOrDefaultAsync(r => r.GEOCODE == geocode);
             
                 if (existingRate == null)
                 {
-                    return NotFound($"Rate source with geocode {Geocode} not found");
+                    return NotFound($"Rate source with geocode {geocode} not found");
                 }
                 
                 // Update the existing rate with new values
@@ -110,23 +110,23 @@ namespace BackendApi.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Error updating rate source {Geocode}");
+                _logger.LogError(ex, $"Error updating rate source {geocode}");
                 return StatusCode(500, "Internal server error");
             }
         }
 
         // DELETE: api/ratesource/{id}
-        [HttpDelete("{Geocode}")]
-        public async Task<IActionResult> DeleteRateSource(string Geocode)
+        [HttpDelete("{geocode}")]
+        public async Task<IActionResult> DeleteRateSource(string geocode)
         {
             try
             {
                 var rateSource = await _dbContext.Rates
-                    .FirstOrDefaultAsync(r => r.GEOCODE == Geocode);
+                    .FirstOrDefaultAsync(r => r.GEOCODE == geocode);
                 
                 if (rateSource == null)
                 {
-                    return NotFound($"Rate source with geocode {Geocode} not found");
+                    return NotFound($"Rate source with geocode {geocode} not found");
                 }
                 
                 _dbContext.Rates.Remove(rateSource);
@@ -135,7 +135,7 @@ namespace BackendApi.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Error deleting rate source {Geocode}");
+                _logger.LogError(ex, $"Error deleting rate source {geocode}");
                 return StatusCode(500, "Internal server error");
             }
         }

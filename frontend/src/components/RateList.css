@@ -1,0 +1,185 @@
+.rate-list {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+}
+
+.rate-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.rate-list-header h2 {
+  color: #333;
+  margin: 0;
+}
+
+.search-container {
+  flex: 1;
+  max-width: 400px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.loading,
+.no-results {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+  font-size: 16px;
+}
+
+.error-container {
+  text-align: center;
+  padding: 40px;
+}
+
+.error-message {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 15px;
+  border: 1px solid #f5c6cb;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  display: inline-block;
+}
+
+.retry-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.retry-btn:hover {
+  background-color: #0056b3;
+}
+
+.rates-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.rate-card {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+.rate-card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.rate-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.rate-header h3 {
+  margin: 0;
+  color: #333;
+  font-size: 18px;
+}
+
+.effective-date {
+  background-color: #e9ecef;
+  color: #6c757d;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.location-info {
+  margin-bottom: 15px;
+}
+
+.location-item {
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+.location-item strong {
+  color: #495057;
+  min-width: 60px;
+  display: inline-block;
+}
+
+.tax-rates {
+  border-top: 1px solid #eee;
+  padding-top: 15px;
+}
+
+.rate-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.rate-item.total-rate {
+  border-top: 1px solid #eee;
+  padding-top: 8px;
+  margin-top: 8px;
+  font-weight: bold;
+  color: #007bff;
+}
+
+.rate-label {
+  color: #6c757d;
+}
+
+.rate-value {
+  color: #333;
+  font-weight: 500;
+}
+
+.total-rate .rate-value {
+  color: #007bff;
+}
+
+@media (max-width: 768px) {
+  .rate-list {
+    margin: 10px;
+    padding: 15px;
+  }
+  
+  .rate-list-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .search-container {
+    max-width: none;
+  }
+  
+  .rates-grid {
+    grid-template-columns: 1fr;
+  }
+}
