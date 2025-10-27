@@ -106,19 +106,19 @@ const RateList: React.FC<RateListProps> = ({ onRefresh }) => {
                 <div key="state-tax" className="rate-item">
                   <span className="rate-label">State Tax:</span>
                   <span className="rate-value">
-                    {rate.State_Tax_Rate ? `${rate.State_Tax_Rate}%` : 'N/A'}
+                    {rate.State_Tax_Rate ? `${(rate.State_Tax_Rate * 100).toFixed(4)}%` : 'N/A'}
                   </span>
                 </div>
                 <div key="county-tax" className="rate-item">
                   <span className="rate-label">County Tax:</span>
                   <span className="rate-value">
-                    {rate.County_Tax_Rate ? `${rate.County_Tax_Rate}%` : 'N/A'}
+                    {rate.County_Tax_Rate ? `${(rate.County_Tax_Rate * 100).toFixed(4)}%` : 'N/A'}
                   </span>
                 </div>
                 <div key="city-tax" className="rate-item">
                   <span className="rate-label">City Tax:</span>
                   <span className="rate-value">
-                    {rate.City_Tax_Rate ? `${rate.City_Tax_Rate}%` : 'N/A'}
+                    {rate.City_Tax_Rate ? `${(rate.City_Tax_Rate * 100).toFixed(4)}%` : 'N/A'}
                   </span>
                 </div>
                 <div key="total-tax" className="rate-item total-rate">
@@ -128,7 +128,7 @@ const RateList: React.FC<RateListProps> = ({ onRefresh }) => {
                       const total = (rate.State_Tax_Rate || 0) + 
                                    (rate.County_Tax_Rate || 0) + 
                                    (rate.City_Tax_Rate || 0);
-                      return total > 0 ? `${total.toFixed(4)}%` : 'N/A';
+                      return total > 0 ? `${(total * 100).toFixed(4)}%` : 'N/A';
                     })()}
                   </span>
                 </div>

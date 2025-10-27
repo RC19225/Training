@@ -151,7 +151,9 @@ const TaxRateForm: React.FC<TaxRateFormProps> = ({ onSubmit, onCancel }) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
-      [name]: name.includes('Rate') ? (value === '' ? undefined : parseFloat(value)) : value
+      [name]: name.includes('Rate') ? 
+        (value === '' ? undefined : parseFloat(value) / 100) : // Convert percentage to decimal
+        value
     }));
   };
 
@@ -184,10 +186,7 @@ const TaxRateForm: React.FC<TaxRateFormProps> = ({ onSubmit, onCancel }) => {
   return (
     <div className="tax-rate-form">
       <h2>Add New Tax Rate</h2>
-      <div className="form-help">
-        <p><strong>Smart Form:</strong> Enter a geocode to auto-fill location, or select location to auto-fill geocode.</p>
-        <p><em>Partial selections (e.g., state only) will use defaults for county/city as needed.</em></p>
-      </div>
+      
       {error && <div className="error-message">{error}</div>}
       
       <form onSubmit={handleSubmit}>
@@ -280,7 +279,7 @@ const TaxRateForm: React.FC<TaxRateFormProps> = ({ onSubmit, onCancel }) => {
               type="number"
               id="State_Tax_Rate"
               name="State_Tax_Rate"
-              value={formData.State_Tax_Rate || ''}
+              value={formData.State_Tax_Rate ? (formData.State_Tax_Rate * 100).toString() : ''}
               onChange={handleInputChange}
               step="0.0001"
               min="0"
@@ -294,7 +293,7 @@ const TaxRateForm: React.FC<TaxRateFormProps> = ({ onSubmit, onCancel }) => {
               type="number"
               id="County_Tax_Rate"
               name="County_Tax_Rate"
-              value={formData.County_Tax_Rate || ''}
+              value={formData.County_Tax_Rate ? (formData.County_Tax_Rate * 100).toString() : ''}
               onChange={handleInputChange}
               step="0.0001"
               min="0"
@@ -308,7 +307,7 @@ const TaxRateForm: React.FC<TaxRateFormProps> = ({ onSubmit, onCancel }) => {
               type="number"
               id="City_Tax_Rate"
               name="City_Tax_Rate"
-              value={formData.City_Tax_Rate || ''}
+              value={formData.City_Tax_Rate ? (formData.City_Tax_Rate * 100).toString() : ''}
               onChange={handleInputChange}
               step="0.0001"
               min="0"

@@ -62,19 +62,43 @@ export class RateService {
 
   static async createRate(rate: RateDto): Promise<RateDto> {
     try {
+      // Transform the keys to match what the backend expects (camelCase)
+      const transformedRate = {
+        geocode: rate.GEOCODE,
+        state: rate.STATE,
+        county: rate.COUNTY,
+        city: rate.CITY,
+        state_Tax_Rate: rate.State_Tax_Rate,
+        county_Tax_Rate: rate.County_Tax_Rate,
+        city_Tax_Rate: rate.City_Tax_Rate,
+        effective_Date: rate.Effective_Date
+      };
+
       const response = await fetch(`${API_BASE_URL}/ratesource`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(rate),
+        body: JSON.stringify(transformedRate),
       });
       
       if (!response.ok) {
         throw new Error('Failed to create rate');
       }
       
-      return await response.json();
+      const responseData = await response.json();
+      
+      // Transform the response back to our interface format
+      return {
+        GEOCODE: responseData.geocode || responseData.GEOCODE,
+        STATE: responseData.state || responseData.STATE,
+        COUNTY: responseData.county || responseData.COUNTY,
+        CITY: responseData.city || responseData.CITY,
+        State_Tax_Rate: responseData.state_Tax_Rate || responseData.State_Tax_Rate,
+        County_Tax_Rate: responseData.county_Tax_Rate || responseData.County_Tax_Rate,
+        City_Tax_Rate: responseData.city_Tax_Rate || responseData.City_Tax_Rate,
+        Effective_Date: responseData.effective_Date || responseData.Effective_Date
+      };
     } catch (error) {
       console.error('Error creating rate:', error);
       throw error;
