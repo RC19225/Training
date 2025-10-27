@@ -105,6 +105,75 @@ export class RateService {
     }
   }
 
+  static async getRateByGeocode(geocode: string): Promise<any> {
+    try {
+      console.log('Fetching rate by geocode:', geocode);
+      const response = await fetch(`${API_BASE_URL}/ratesource/${geocode}`);
+      
+      if (!response.ok) {
+        if (response.status === 404) {
+          throw new Error('Rate not found');
+        }
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      console.log('Fetched rate details:', data);
+      return data;
+    } catch (error) {
+      console.error('Error fetching rate by geocode:', error);
+      throw error;
+    }
+  }
+
+  static async updateRate(geocode: string, rate: any): Promise<any> {
+    try {
+      console.log('Updating rate:', geocode, rate);
+      const response = await fetch(`${API_BASE_URL}/ratesource/${geocode}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(rate),
+      });
+      
+      if (!response.ok) {
+        if (response.status === 404) {
+          throw new Error('Rate not found');
+        }
+        throw new Error(`Failed to update rate: ${response.status}`);
+      }
+      
+      const responseData = await response.json();
+      console.log('Updated rate:', responseData);
+      return responseData;
+    } catch (error) {
+      console.error('Error updating rate:', error);
+      throw error;
+    }
+  }
+
+  static async deleteRate(geocode: string): Promise<void> {
+    try {
+      console.log('Deleting rate:', geocode);
+      const response = await fetch(`${API_BASE_URL}/ratesource/${geocode}`, {
+        method: 'DELETE',
+      });
+      
+      if (!response.ok) {
+        if (response.status === 404) {
+          throw new Error('Rate not found');
+        }
+        throw new Error(`Failed to delete rate: ${response.status}`);
+      }
+      
+      console.log('Rate deleted successfully');
+    } catch (error) {
+      console.error('Error deleting rate:', error);
+      throw error;
+    }
+  }
+
   // Use CSV data for dropdown population
   static async getStates(): Promise<DropdownOption[]> {
     try {

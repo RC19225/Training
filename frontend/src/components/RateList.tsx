@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { RateDto, RateService } from '../services/rateService';
+import RateDetailModal from './RateDetailModal';
 import './RateList.css';
 
 interface RateListProps {
@@ -11,6 +12,7 @@ const RateList: React.FC<RateListProps> = ({ onRefresh }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string>('');
   const [searchTerm, setSearchTerm] = useState('');
+  const [selectedGeocode, setSelectedGeocode] = useState<string | null>(null);
 
   const loadRates = async () => {
     try {
@@ -32,6 +34,7 @@ const RateList: React.FC<RateListProps> = ({ onRefresh }) => {
 
   useEffect(() => {
     loadRates();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [onRefresh]);
 
   const filteredRates = rates.filter(rate =>
@@ -41,6 +44,23 @@ const RateList: React.FC<RateListProps> = ({ onRefresh }) => {
     (rate.CITY || '').toLowerCase().includes(searchTerm.toLowerCase())
   );
   console.log('Filtered Rates:', filteredRates[0]);
+
+  const handleCardClick = (geocode: string) => {
+    setSelectedGeocode(geocode);
+  };
+
+  const handleModalClose = () => {
+    setSelectedGeocode(null);
+  };
+
+  const handleRateUpdated = () => {
+    loadRates(); // Refresh the rates list
+  };
+
+  const handleRateDeleted = () => {
+    loadRates(); // Refresh the rates list
+    setSelectedGeocode(null);
+  };
 
 
   if (loading) {
@@ -80,7 +100,11 @@ const RateList: React.FC<RateListProps> = ({ onRefresh }) => {
       ) : (
         <div className="rates-grid">
           {filteredRates.map((rate) => (
-            <div key={rate.GEOCODE} className="rate-card">
+            <div 
+              key={rate.GEOCODE} 
+              className="rate-card clickable"
+              onClick={() => handleCardClick(rate.GEOCODE)}
+            >
               <div className="rate-header">
                 <h3>{rate.GEOCODE}</h3>
                 {rate.Effective_Date && (
@@ -136,6 +160,15 @@ const RateList: React.FC<RateListProps> = ({ onRefresh }) => {
             </div>
           ))}
         </div>
+      )}
+
+      {selectedGeocode && (
+        <RateDetailModal
+          geocode={selectedGeocode}
+          onClose={handleModalClose}
+          onRateUpdated={handleRateUpdated}
+          onRateDeleted={handleRateDeleted}
+        />
       )}
     </div>
   );
