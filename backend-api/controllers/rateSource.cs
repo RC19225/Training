@@ -131,7 +131,7 @@ namespace BackendApi.Controllers
                 
                 _dbContext.Rates.Remove(rateSource);
                 await _dbContext.SaveChangesAsync();
-                return NotFound();
+                return NoContent(); // 204 - Standard response for successful DELETE
             }
             catch (Exception ex)
             {

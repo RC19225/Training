@@ -141,9 +141,21 @@ const RateDetailModal: React.FC<RateDetailModalProps> = ({
         return (
           <input
             type="number"
-            step="0.0001"
+            step="0.001"
+            min="0"
+            max="100"
             value={value || ''}
-            onChange={(e) => handleInputChange(fieldName, e.target.value ? parseFloat(e.target.value) : null)}
+            onChange={(e) => {
+              const inputValue = e.target.value;
+              if (inputValue === '') {
+                handleInputChange(fieldName, null);
+              } else {
+                const parsedValue = parseFloat(inputValue);
+                if (!isNaN(parsedValue)) {
+                  handleInputChange(fieldName, Math.round(parsedValue * 1000) / 1000);
+                }
+              }
+            }}
             className="edit-input numeric-input"
           />
         );
@@ -171,7 +183,13 @@ const RateDetailModal: React.FC<RateDetailModalProps> = ({
 
     // Display value
     if (isNumericField(fieldName, value) && value !== null && value !== undefined) {
-      return <span className="field-value">{(value * 100).toFixed(4)}%</span>;
+      // For rate fields, show as percentage with proper precision
+      if (fieldName.toLowerCase().includes('rate')) {
+        const percentage = (value * 100);
+        return <span className="field-value">{percentage.toFixed(3)}%</span>;
+      }
+      // For other numeric fields (like minimums/maximums), show as currency or plain number
+      return <span className="field-value">{value}</span>;
     }
     
     if (isDateField(fieldName) && value) {
